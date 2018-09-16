@@ -17,13 +17,13 @@ router.post('/', (req, res) => {
 		if(!user){
 			res.json({
 				status: false,
-				message: 'Authentication failed, user not found.'
+				message: 'User not found.'
 			});
         }
         else if(!password){
             res.json({
 				status: false,
-				message: 'Authentication failed, password null'
+				message: "The password can't be empty"
 			});
         }
         else{
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
 				if (!result){
 					res.json({
 						status: false,
-						message: 'Authentication failed, wrong password.'
+						message: "The password is incorrect"
 					});
 				}else{
 					const payload = {
@@ -43,7 +43,8 @@ router.post('/', (req, res) => {
 
 					res.json({
 						status: true,
-						token
+						token,
+						user
 					})
 				}
 			});

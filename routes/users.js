@@ -5,28 +5,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 
-router.post('/register',(req,res,next)=>{
-  const {username,name,lastName,sex,email,country,password} = req.body;
-  //password hashleme kısmı ->
-  bcrypt.hash(password ,10).then((hash)=>{
-      const user = new User({
-          username,
-          name,
-          lastName,
-          sex,
-          email,
-          country,
-          password:hash
-      })
-  user.save((err,data)=>{
-    if(err)
-        next({message:err,code:'0'})
-    res.json(data)
-  })
-})
-
-      
-})
 router.get('/',(req,res,next)=>{
   const promise = User.find({})
   promise.then((data) => {
@@ -51,13 +29,13 @@ router.post('/auth', (req, res) => {
 		if(!user){
 			res.json({
 				status: false,
-				message: 'Authentication failed, user not found.'
+				message: "The username wasn't found"
 			});
         }
         else if(!password){
             res.json({
 				status: false,
-				message: 'Authentication failed, password null'
+				message: "The password can't be empty"
 			});
         }
         else{
@@ -65,7 +43,7 @@ router.post('/auth', (req, res) => {
 				if (!result){
 					res.json({
 						status: false,
-						message: 'Authentication failed, wrong password.'
+						message: "The password that you've entered is incorrect"
 					});
 				}else{
 					const payload = {
