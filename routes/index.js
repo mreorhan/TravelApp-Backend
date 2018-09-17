@@ -12,43 +12,21 @@ router.get('/', function(req, res, next) {
 router.post('/register',(req,res)=>{
   const {username,name,lastName,sex,email,country,password} = req.body;
   //password hashleme kısmı ->
-  
-  if(username && email){
-	  User.findOne({
+  User.findOne({
 		username
 	}, (err, user) => {
 		if (err)
 			throw err;
 
-		if(user){
+		if(!user){
 			res.json({
-				message: 'This username has been taken. Please choose a different username.',
-				status: false
+				status: false,
+				message: 'User not found.'
 			});
         }
-	})
-	
-	  User.findOne({
-		email
-	}, (err, email) => {
-		if (err)
-			throw err;
-
-		if(email){
-			res.json({
-				message: 'This e-mail has been taken. Please choose a different e-mail.',
-				status: false
-			});
-        }
-	})
-  }
-
-  if(!password || !username || !name || !lastName || !email)
-    res.json({message:"All fields must be filled",status:false})
+  else if(!password)
+    res.json({message:"Password cant be empty",status:false})
   else{
-	  
-	  
-	  
     bcrypt.hash(password ,10).then((hash)=>{
         const user = new User({
             username,
@@ -67,7 +45,6 @@ router.post('/register',(req,res)=>{
   })
 
 }
-      
-})
+     	});
+});
 module.exports = router;
-
