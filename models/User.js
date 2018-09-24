@@ -33,7 +33,6 @@ const UserSchema = new Schema({
     },
     profilePhoto:{
         type:String,
-        default:'default.jpg'
     },
     createdDate:{
         type:Date,
@@ -48,6 +47,10 @@ const UserSchema = new Schema({
 	travellingPoint:{
 		type:Number,
 		default:0
+	},
+	location:{
+		lat: String,
+		lng: String,
 	}
 })
 

@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/register',(req,res)=>{
-  const {username,name,lastName,sex,email,country,password} = req.body;
+  const {username,name,lastName,sex,email,country,password,lat,lng} = req.body;
   //password hashleme kısmı ->
   User.findOne({
 		username
@@ -18,10 +18,10 @@ router.post('/register',(req,res)=>{
 		if (err)
 			throw err;
 
-		if(!user){
+		if(user){
 			res.json({
 				status: false,
-				message: 'User not found.'
+				message: 'This user have already used.'
 			});
         }
   else if(!password)
@@ -35,7 +35,11 @@ router.post('/register',(req,res)=>{
             sex,
             email,
             country,
-            password:hash
+            password:hash,
+            location:{
+              lat,
+              lng
+            }
         })
     user.save((err,data)=>{
       if(err){
