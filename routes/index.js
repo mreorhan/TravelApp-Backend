@@ -36,10 +36,8 @@ router.post('/register',(req,res)=>{
             email,
             country,
             password:hash,
-            location:[{
             lat,
             lng
-          }]
         })
     user.save((err,data)=>{
       if(err){
