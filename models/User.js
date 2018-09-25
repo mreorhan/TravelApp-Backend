@@ -48,10 +48,8 @@ const UserSchema = new Schema({
 		type:Number,
 		default:0
 	},
-	location:{
-		lat: String,
-		lng: String,
-	}
+	lat: String,
+	lng: String
 })
 
 module.exports = mongoose.model('user',UserSchema);

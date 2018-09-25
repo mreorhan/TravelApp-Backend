@@ -34,10 +34,10 @@ router.post('/register',(req,res)=>{
             lastName,
             sex,
             email,
+            lat,
+            lng,
             country,
             password:hash,
-            lat,
-            lng
         })
     user.save((err,data)=>{
       if(err){
