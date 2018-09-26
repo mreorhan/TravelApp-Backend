@@ -2,10 +2,27 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Contact = require('../models/Contact');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'TravelApi',details: 'All rights reserved',author:'@mreorhan' });
 });
+
+
+router.post('/contact',(req,res)=>{
+  const {id,details,system,version} = req.body;
+  const contact = new Contact({
+    id,
+    details,
+    system,
+    version
+  })
+  contact.save((err,data)=>{
+    if(err){
+      res.json({message:err,status:false})}
+    res.json(data)
+  })
+})
 
 
 
