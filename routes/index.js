@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'TravelApi',details: 'All rights reserved',author:'@mreorhan' });
 });
 
-
+//contact
 router.post('/contact',(req,res)=>{
   const {id,details,system,version} = req.body;
   const contact = new Contact({
