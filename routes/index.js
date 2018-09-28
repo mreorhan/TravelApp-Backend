@@ -38,7 +38,8 @@ router.post('/register',(req,res)=>{
 		if(user){
 			res.json({
 				status: false,
-				message: 'This user have already used.'
+        message: 'This user have already used.',
+        code:2
 			});
         }
   else if(!password)
@@ -57,8 +58,10 @@ router.post('/register',(req,res)=>{
             password:hash,
         })
     user.save((err,data)=>{
-      if(err){
-        res.json({message:err,status:false})}
+      if(err.name === 'MongoError' && err.code === 11000)
+        res.json({message:1,status:false,code:1})
+      else
+        res.json({message:err,status:false,code:3})
       res.json(data)
     })
   })
