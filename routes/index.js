@@ -38,12 +38,11 @@ router.post('/register',(req,res)=>{
 		if(user){
 			res.json({
 				status: false,
-        message: 'This user have already used.',
         code:2
 			});
         }
   else if(!password)
-    res.json({message:"Password cant be empty",status:false})
+    res.json({status:false,code:4})
   else{
     bcrypt.hash(password ,10).then((hash)=>{
         const user = new User({
@@ -58,10 +57,12 @@ router.post('/register',(req,res)=>{
             password:hash,
         })
     user.save((err,data)=>{
+      if(err===""){
       if(err.name === 'MongoError' && err.code === 11000)
         res.json({message:1,status:false,code:1})
-      else
-        res.json({message:err,status:false,code:3})
+      else if(data!==null)
+        res.json(data)
+      }
       res.json(data)
     })
   })
