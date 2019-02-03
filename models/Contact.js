@@ -16,6 +16,10 @@ const ContactSchema = new Schema({
 	version:{
 		type:String,
 		required: [true,"This are must be fill"]
+	},
+	date:{
+		type:String,
+		default: Date.now
 	}
 })
 
